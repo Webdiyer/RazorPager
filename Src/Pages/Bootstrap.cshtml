@@ -1,0 +1,62 @@
+﻿@model Webdiyer.RazorPagerMetaData
+<nav aria-label="Page navigation">
+    <div class="row">       
+        <div class="col">
+            <ul class="pagination  justify-content-end">
+                <li class="page-item@(Model.IsFirstPage?" disabled":"")">
+                    @if (Model.IsFirstPage)
+                    {
+                        <span class="page-link">&lt;&lt;</span>
+                    }
+                    else
+                    {
+                        <a data-pageindex="1" href="@Model.FirstPageUrl" class="page-link">&lt;&lt;</a>
+                    }
+                </li>
+                <li class="page-item@(Model.HasPreviousPage?"":" disabled")">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <a data-pageindex="@(Model.CurrentPageIndex-1)" class="page-link" href="@Model.PreviousPageUrl">&lt;</a>
+                    }
+                    else
+                    {
+                        <span class="page-link">&lt;</span>
+                    }
+                </li>
+                @foreach (var item in Model.PagerItems.OrderBy(p => p.PageIndex))
+                {
+                    <li class="page-item@(item.IsCurrent ? " active" : "")">
+                        @if (item.IsCurrent)
+                        {
+                            <span class="page-link">@item.PageIndex<span class="sr-only">(current)</span></span>
+                        }
+                        else
+                        {
+                            <a data-pageindex="@item.PageIndex" class="page-link" href="@item.Url">@item.PageIndex</a>
+                        }
+                    </li>
+                }
+                <li class="page-item@(Model.HasNextPage?"":" disabled")">
+                    @if (Model.HasNextPage)
+                    {
+                        <a data-pageindex="@(Model.CurrentPageIndex+1)" href="@Model.NextPageUrl" class="page-link">&gt;</a>
+                    }
+                    else
+                    {
+                        <span class="page-link">&gt;</span>
+                    }
+                </li>
+                <li class="page-item@(Model.IsLastPage?" disabled":"")">
+                    @if (Model.IsLastPage)
+                    {
+                        <span class="page-link">&gt;&gt;</span>
+                    }
+                    else
+                    {
+                        <a data-pageindex="@Model.TotalPageCount" class="page-link" href="@Model.LastPageUrl">&gt;&gt;</a>
+                    }
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

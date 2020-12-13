@@ -1,0 +1,13 @@
+﻿@model Webdiyer.RazorPagerMetaData
+
+@foreach (var item in Model.PagerItems.OrderBy(p => p.PageIndex))
+{
+    if (!item.IsCurrent)
+    {
+    <a href="@item.Url">@item.PageIndex</a>
+    }
+    else
+    {
+        <span>@item.PageIndex</span>
+    }
+}
