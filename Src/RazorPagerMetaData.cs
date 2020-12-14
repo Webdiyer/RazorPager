@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Webdiyer
 {
@@ -15,7 +16,7 @@ namespace Webdiyer
 
         public int TotalPageCount => (int)Math.Ceiling(TotalItemCount / (double)PageSize);
 
-        public List<PagerItem> PagerItems;
+        public List<RazorPagerItem> PagerItems;
 
         private RouteValueDictionary _routeValues { get; }
 
@@ -68,9 +69,10 @@ namespace Webdiyer
 
         string generatePaginationUrl(int pageIndex)
         {
-            var rv = new RouteValueDictionary(_routeValues);
-            rv[PageIndexParameterName] = pageIndex;
-            return _urlHelper.Page(_routeValues["page"] as string, rv);
+            var qryPrms = _urlHelper.ActionContext.HttpContext.Request.Query.ToDictionary(d => d.Key, d => d.Value.ToString());
+            var rvalues = new RouteValueDictionary(qryPrms);            
+            rvalues[PageIndexParameterName] = pageIndex;
+            return _urlHelper.Page(_routeValues["page"] as string, rvalues);
         }
 
 
@@ -99,28 +101,11 @@ namespace Webdiyer
             {
                 _endPageIndex = TotalPageCount;
             }
-            PagerItems = new List<PagerItem>();
+            PagerItems = new List<RazorPagerItem>();
             for (int i = _startPageIndex; i <= _endPageIndex; i++)
             {
-                routeValues[pageParameterName] = i;
-                PagerItems.Add(new PagerItem(i, urlHelper.Page(routeValues["page"] as string, routeValues), i == CurrentPageIndex));
+                PagerItems.Add(new RazorPagerItem(i, generatePaginationUrl(i), i == CurrentPageIndex));
             }
-        }
-    }
-
-    public class PagerItem
-    {
-        public int PageIndex { get; set; }
-
-        public string Url { get; set; }
-
-        public bool IsCurrent { get; set; }
-
-        public PagerItem(int pageIndex, string url, bool isCurrent)
-        {
-            PageIndex = pageIndex;
-            Url = url;
-            IsCurrent = isCurrent;
         }
     }
 }

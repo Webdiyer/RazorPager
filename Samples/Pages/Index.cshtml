@@ -2,11 +2,12 @@
 @addTagHelper *,RazorPager
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "RazorPage samples - Basic";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">RazorPage samples - Basic</h1>
+    <p>RazorPage samples</p>
 </div>
-<razorpager total-item-count="250" max-pager-items="15"></razorpager>
+<razorpager total-item-count="288" template-name="bootstrap"></razorpager>
+<razorpager total-item-count="280" max-pager-items="15"></razorpager>

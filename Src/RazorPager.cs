@@ -31,21 +31,10 @@ namespace Webdiyer
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             (_htmlHelper as IViewContextAware).Contextualize(ViewContext);
-            output.TagName = "razorpager";
+            output.TagName = "div";
             output.TagMode = TagMode.StartTagAndEndTag;
             var urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
             var rvalue = ViewContext.RouteData.Values;
-            var qryPrms =ViewContext.HttpContext.Request.Query.ToDictionary(d => d.Key, d => d.Value.ToString());
-            if (qryPrms != null && qryPrms.Any())
-            {
-                foreach (var kv in qryPrms)
-                {
-                    if (!rvalue.ContainsKey(kv.Key))
-                    {
-                        rvalue.Add(kv.Key, kv.Value);
-                    }
-                }
-            }
             int pageIndex;
             string strIndex = rvalue.ContainsKey(PageIndexParameterName) ? rvalue[PageIndexParameterName].ToString() : ViewContext.HttpContext.Request.Query[PageIndexParameterName].ToString();
             if (!int.TryParse(strIndex, out pageIndex))
