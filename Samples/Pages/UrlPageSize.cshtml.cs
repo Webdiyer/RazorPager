@@ -1,19 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Samples.Pages
 {
-    public class IndexModel : PageModel
+    public class UrlPageSizeModel : PageModel
     {
         [BindProperty(SupportsGet = true)]
         public int PageIndex { get; set; }
 
-        public List<int> PagedData { get; set; }   
-        
-        [BindProperty(SupportsGet =true)]
-        public int PageSize { get; set; } = 10;
+        public List<int> PagedData { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int PageSize { get; set; } = 10;
 
         public void OnGet()
         {

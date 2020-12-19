@@ -70,7 +70,9 @@ namespace Webdiyer
         string generatePaginationUrl(int pageIndex)
         {
             var qryPrms = _urlHelper.ActionContext.HttpContext.Request.Query.ToDictionary(d => d.Key, d => d.Value.ToString());
-            var rvalues = new RouteValueDictionary(qryPrms);            
+            var rvalues = new RouteValueDictionary(qryPrms);
+            rvalues = new RouteValueDictionary(rvalues.Union(_routeValues));
+            
             rvalues[PageIndexParameterName] = pageIndex;
             return _urlHelper.Page(_routeValues["page"] as string, rvalues);
         }

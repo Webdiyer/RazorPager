@@ -1,0 +1,24 @@
+﻿@page "/urlpagesize/{pageindex:int=1}/{pagesize:int=10}"
+@addTagHelper *,RazorPager
+@model IndexModel
+@{
+    ViewData["Title"] = "RazorPage samples - Pass page size through Url parameter";
+}
+
+<div class="text-center">
+    <h1 class="display-4">RazorPage samples</h1>
+    <p>Pass page size through Url parameters</p>
+</div>
+<ul>
+    @foreach (var item in Model.PagedData)
+    {
+        <li>Item：@item</li>
+    }
+</ul>
+<razorpager total-item-count="288" template-name="bootstrap" page-size="Model.PageSize"></razorpager>
+<ul>
+    <li><a href="/urlpagesize">Page size = 10 (default)</a></li>
+    <li><a href="/urlpagesize/1/20">Page size = 20</a></li>
+    <li><a href="/urlpagesize/1/30">Page size = 30</a></li>
+    <li><a href="/urlpagesize/1/50">Page size = 50</a></li>
+</ul>

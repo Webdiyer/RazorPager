@@ -1,11 +1,6 @@
 ﻿@model Webdiyer.RazorPagerMetaData
 
-@if (Model.IsFirstPage)
-{
-    <span>&lt;&lt;</span>
-    <span>&lt;</span>
-}
-else
+@if (!Model.IsFirstPage)
 {
     <a href="@Model.FirstPageUrl">&lt;&lt;</a>
     <a href="@Model.PreviousPageUrl">&lt;</a>
@@ -21,12 +16,7 @@ else
         <span>@item.PageIndex</span>
     }
 }
-@if (Model.IsLastPage)
-{
-    <span>&gt;</span>
-    <span>&gt;&gt;</span>
-}
-else
+@if (!Model.IsLastPage)
 {
     <a href="@Model.NextPageUrl">&gt;</a>
     <a href="@Model.LastPageUrl">&gt;&gt;</a>
