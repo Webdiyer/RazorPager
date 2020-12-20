@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.IO;
@@ -31,7 +33,7 @@ namespace Webdiyer
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             (_htmlHelper as IViewContextAware).Contextualize(ViewContext);
-            output.TagName = "div";
+            output.TagName = TagName;
             output.TagMode = TagMode.StartTagAndEndTag;
             var urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
             var rvalue = ViewContext.RouteData.Values;
@@ -52,9 +54,18 @@ namespace Webdiyer
             }
 
             var metaData = new RazorPagerMetaData(TotalItemCount, pageIndex, PageSize, PageIndexParameterName, rvalue, MaxPagerItems, urlHelper);
-            var partial = await _htmlHelper.PartialAsync(TemplateName,metaData);
+            IHtmlContent partialContent;
+            if (!TemplateName.Contains('\\') && !TemplateName.Contains('/')) //not a relative path
+            {
+                partialContent = await _htmlHelper.PartialAsync("RazorPager_"+TemplateName, metaData);
+            }
+            else
+            {
+                partialContent = await _htmlHelper.PartialAsync(TemplateName, metaData);
+            }
             var writer = new StringWriter();
-            partial.WriteTo(writer, _htmlEncoder);
+            writer.WriteLine();
+            partialContent.WriteTo(writer, _htmlEncoder);
             output.Content.SetHtmlContent(writer.ToString());
         }
 
@@ -66,6 +77,8 @@ namespace Webdiyer
         public int TotalItemCount { get; set; }
 
         public int PageSize { get; set; } = 10;
+
+        public string TagName { get; set; } = "div";
 
         public string PageIndexParameterName { get; } = "pageindex";
 

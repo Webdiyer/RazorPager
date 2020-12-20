@@ -18,10 +18,6 @@ namespace Webdiyer
 
         public List<RazorPagerItem> PagerItems;
 
-        private RouteValueDictionary _routeValues { get; }
-
-        private IUrlHelper _urlHelper { get; }
-
         public string PageIndexParameterName { get; }
 
         public bool HasPreviousPage => CurrentPageIndex > 1;
@@ -67,6 +63,18 @@ namespace Webdiyer
 
         public string CurrentPageUrl => generatePaginationUrl(CurrentPageIndex);
 
+        public int StartPageIndex => _startPageIndex;
+
+        public int EndPageIndex => _endPageIndex;       
+
+        private RouteValueDictionary _routeValues { get; }
+
+        private IUrlHelper _urlHelper { get; }
+
+        private int _startPageIndex;
+
+        private int _endPageIndex;
+
         string generatePaginationUrl(int pageIndex)
         {
             var qryPrms = _urlHelper.ActionContext.HttpContext.Request.Query.ToDictionary(d => d.Key, d => d.Value.ToString());
@@ -75,6 +83,11 @@ namespace Webdiyer
             
             rvalues[PageIndexParameterName] = pageIndex;
             return _urlHelper.Page(_routeValues["page"] as string, rvalues);
+        }
+
+        public string GetPaginationUrl(int pageIndex)
+        {
+            return generatePaginationUrl(pageIndex);
         }
 
 
@@ -87,7 +100,7 @@ namespace Webdiyer
             _routeValues = routeValues;
             PageIndexParameterName = pageParameterName;
 
-            var _startPageIndex = CurrentPageIndex - (maxPagerItems / 2);
+            _startPageIndex = CurrentPageIndex - (maxPagerItems / 2);
             if (_startPageIndex + maxPagerItems > TotalPageCount)
             {
                 _startPageIndex = TotalPageCount + 1 - maxPagerItems;
@@ -97,8 +110,7 @@ namespace Webdiyer
                 _startPageIndex = 1;
             }
 
-            // end page index
-            var _endPageIndex = _startPageIndex + maxPagerItems - 1;
+            _endPageIndex = _startPageIndex + maxPagerItems - 1;
             if (_endPageIndex > TotalPageCount)
             {
                 _endPageIndex = TotalPageCount;

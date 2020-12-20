@@ -1,0 +1,23 @@
+﻿@model Webdiyer.RazorPagerMetaData
+
+@if (!Model.IsFirstPage)
+{
+    <a href="@Model.FirstPageUrl">&lt;&lt;</a>
+    <a href="@Model.PreviousPageUrl">&lt;</a>
+}
+@foreach (var item in Model.PagerItems.OrderBy(p => p.PageIndex))
+{
+    if (!item.IsCurrent)
+    {
+        <a href="@item.Url">@item.PageIndex</a>
+    }
+    else
+    {
+        <span>@item.PageIndex</span>
+    }
+}
+@if (!Model.IsLastPage)
+{
+    <a href="@Model.NextPageUrl">&gt;</a>
+    <a href="@Model.LastPageUrl">&gt;&gt;</a>
+}

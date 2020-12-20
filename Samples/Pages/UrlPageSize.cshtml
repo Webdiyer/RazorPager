@@ -17,8 +17,8 @@
 </ul>
 <razorpager total-item-count="288" template-name="bootstrap" page-size="Model.PageSize"></razorpager>
 <ul>
-    <li><a href="/urlpagesize">Page size = 10 (default)</a></li>
-    <li><a href="/urlpagesize/1/20">Page size = 20</a></li>
-    <li><a href="/urlpagesize/1/30">Page size = 30</a></li>
-    <li><a href="/urlpagesize/1/50">Page size = 50</a></li>
+    <li><a asp-page="urlpagesize" asp-route-pagesize="" asp-route-pageindex="">Page size = 10 (default)</a></li>
+    <li><a asp-page="urlpagesize" asp-route-pagesize="20" asp-route-pageindex="1">Page size = 20</a></li>
+    <li><a asp-page="urlpagesize" asp-route-pagesize="30" asp-route-pageindex="1">Page size = 30</a></li>
+    <li><a asp-page="urlpagesize" asp-route-pagesize="50" asp-route-pageindex="1">Page size = 50</a></li>
 </ul>
