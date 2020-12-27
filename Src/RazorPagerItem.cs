@@ -1,4 +1,4 @@
-﻿namespace Webdiyer
+﻿namespace Webdiyer.Razor
 {
     public class RazorPagerItem
     {

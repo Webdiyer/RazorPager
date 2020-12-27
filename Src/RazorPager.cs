@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.Routing;
 using System.IO;
-using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace Webdiyer
+namespace Webdiyer.Razor
 {
     [HtmlTargetElement("razorpager")]
     public class RazorPager:TagHelper
     {
-        private HtmlHelper _htmlHelper;
+        private IHtmlHelper _htmlHelper;
         private HtmlEncoder _htmlEncoder;
         private IUrlHelperFactory _urlHelperFactory;
 
@@ -22,23 +21,34 @@ namespace Webdiyer
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
 
-        public RazorPager(IHtmlHelper htmlHelper,HtmlEncoder htmlEncoder,IUrlHelperFactory urlHelperFactory)
+        public RazorPager(IHtmlHelper htmlHelper,HtmlEncoder htmlEncoder,
+            IUrlHelperFactory urlHelperFactory)
         {
-            _htmlHelper = htmlHelper as HtmlHelper;
+            _htmlHelper = htmlHelper;
             _htmlEncoder = htmlEncoder;
             _urlHelperFactory = urlHelperFactory;
         }
 
 
-        public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        public override async Task ProcessAsync(TagHelperContext context, 
+            TagHelperOutput output)
         {
-            (_htmlHelper as IViewContextAware).Contextualize(ViewContext);
+            var vca = _htmlHelper as IViewContextAware;
+            if (vca != null)
+            {
+                vca.Contextualize(ViewContext);
+            }
             output.TagName = TagName;
             output.TagMode = TagMode.StartTagAndEndTag;
             var urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
-            var rvalue = ViewContext.RouteData.Values;
+            var routeValues = ViewContext == null
+                ? new RouteValueDictionary()
+                : ViewContext.RouteData.Values;
             int pageIndex;
-            string strIndex = rvalue.ContainsKey(PageIndexParameterName) ? rvalue[PageIndexParameterName].ToString() : ViewContext.HttpContext.Request.Query[PageIndexParameterName].ToString();
+            string strIndex = routeValues != null && 
+                routeValues.ContainsKey(PageIndexParameterName)
+                ? (string)routeValues[PageIndexParameterName]
+                : (string)ViewContext?.HttpContext?.Request?.Query[PageIndexParameterName];
             if (!int.TryParse(strIndex, out pageIndex))
             {
                 pageIndex = 1;
@@ -53,11 +63,16 @@ namespace Webdiyer
                 pageIndex = 1;
             }
 
-            var metaData = new RazorPagerMetaData(TotalItemCount, pageIndex, PageSize, PageIndexParameterName, rvalue, MaxPagerItems, urlHelper);
+            var metaData = new RazorPagerMetaData(TotalItemCount, 
+                pageIndex, PageSize, 
+                PageIndexParameterName, 
+                routeValues, MaxPagerItems, 
+                urlHelper);
             IHtmlContent partialContent;
             if (!TemplateName.Contains('\\') && !TemplateName.Contains('/')) //not a relative path
             {
-                partialContent = await _htmlHelper.PartialAsync("RazorPager_"+TemplateName, metaData);
+                partialContent = await _htmlHelper.PartialAsync("RazorPager_"
+                    +TemplateName, metaData);
             }
             else
             {

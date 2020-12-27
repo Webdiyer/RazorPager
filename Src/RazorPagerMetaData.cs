@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Webdiyer
+namespace Webdiyer.Razor
 {
     public class RazorPagerMetaData
     {
@@ -30,7 +30,8 @@ namespace Webdiyer
 
         public string FirstPageUrl => generatePaginationUrl(1);
 
-        public string UrlTemplate => generatePaginationUrl(int.MinValue).Replace(int.MinValue.ToString(), "__" + PageIndexParameterName + "__");
+        //public string UrlTemplate => generatePaginationUrl(int.MinValue)
+        //    .Replace(int.MinValue.ToString(), "__" + PageIndexParameterName + "__");
 
         public string NextPageUrl
         {
@@ -77,7 +78,8 @@ namespace Webdiyer
 
         string generatePaginationUrl(int pageIndex)
         {
-            var qryPrms = _urlHelper.ActionContext.HttpContext.Request.Query.ToDictionary(d => d.Key, d => d.Value.ToString());
+            var qryPrms = _urlHelper.ActionContext?.HttpContext?.
+                Request?.Query?.ToDictionary(d => d.Key, d => d.Value.ToString());
             var rvalues = new RouteValueDictionary(qryPrms);
             rvalues = new RouteValueDictionary(rvalues.Union(_routeValues));
             
@@ -91,7 +93,9 @@ namespace Webdiyer
         }
 
 
-        public RazorPagerMetaData(int total, int pageIndex, int pageSize, string pageParameterName, RouteValueDictionary routeValues, int maxPagerItems, IUrlHelper urlHelper)
+        public RazorPagerMetaData(int total, int pageIndex, int pageSize, 
+            string pageParameterName, RouteValueDictionary routeValues, 
+            int maxPagerItems, IUrlHelper urlHelper)
         {
             TotalItemCount = total;
             CurrentPageIndex = pageIndex;
