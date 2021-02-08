@@ -1,0 +1,33 @@
+﻿@page "/employees/{pageindex:int=1}"
+@addTagHelper *,RazorPager
+@model Samples.Pages.EmployeesModel
+
+    <div class="text-center">
+        <h1>Using database</h1>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in Model.PagedEmployees)
+            {
+                <tr>
+                    <td>@emp.Id</td>
+                    <td>@emp.FirstName</td>
+                    <td>@emp.LastName</td>
+                    <td>@emp.Gender</td>
+                    <td>@emp.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <razorpager aria-label="Page navigation" tag-name="nav" total-item-count="@Model.TotalItems"
+                template-name="bootstrap" page-size="@Model.PageSize"></razorpager>
