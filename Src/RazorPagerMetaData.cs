@@ -14,7 +14,14 @@ namespace Webdiyer.Razor
 
         public int PageSize { get; set; }
 
-        public int TotalPageCount => (int)Math.Ceiling(TotalItemCount / (double)PageSize);
+        public int TotalPageCount
+        {
+            get
+            {
+                var count=(int)Math.Ceiling(TotalItemCount / (double)PageSize);
+                return count == 0 ? 1 : count;
+            }
+        }
 
         public List<RazorPagerItem> PagerItems;
 
