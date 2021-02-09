@@ -7,7 +7,7 @@ using Samples.Data;
 
 namespace Samples.Migrations
 {
-    [DbContext(typeof(TestDbContext))]
+    [DbContext(typeof(DemoDbContext))]
     partial class TestDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

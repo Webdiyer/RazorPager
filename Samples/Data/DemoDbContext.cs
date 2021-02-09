@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Samples.Data
 {
-    public class TestDbContext:DbContext
+    public class DemoDbContext:DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -4,6 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <RootNamespace>Webdiyer</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Webdiyer</Authors>
+    <Company />
+    <Copyright>2021 Webdiyer</Copyright>
+    <PackageProjectUrl>http://www.webdiyer.com</PackageProjectUrl>
+    <PackageTags>RazorPager pagination</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

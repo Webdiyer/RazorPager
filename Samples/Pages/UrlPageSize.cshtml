@@ -5,8 +5,10 @@
     ViewData["Title"] = "RazorPage samples - Pass page size through Url parameter";
 }
 
-<div class="text-center">
-    <h1>Dynamic page size</h1>
+<h1 class="text-center">Dynamic page size</h1>
+<div class="alert alert-primary">
+    <p>This sample demonstrates how to set page size dynamically by passing page size through url parameters.</p>
+    <p>本示例演示如何通过url参数传递page size来动态设置每页显示数据量。</p>
 </div>
 <ul>
     @foreach (var item in Model.PagedData)

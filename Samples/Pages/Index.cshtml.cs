@@ -5,15 +5,15 @@ using System.Collections.Generic;
 namespace Samples.Pages
 {
     public class IndexModel : PageModel
-    {
+    {         
+        public int PageSize=10;
+
         [BindProperty(SupportsGet = true)]
         public int PageIndex { get; set; }
 
-        public List<int> PagedData { get; set; }   
-        
-        [BindProperty(SupportsGet =true)]
-        public int PageSize { get; set; } = 10;
+        public List<int> PagedData { get; set; }  
 
+        public int TotalItems => 286;
 
         public void OnGet()
         {

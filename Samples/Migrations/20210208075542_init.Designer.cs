@@ -8,7 +8,7 @@ using Samples.Data;
 
 namespace Samples.Migrations
 {
-    [DbContext(typeof(TestDbContext))]
+    [DbContext(typeof(DemoDbContext))]
     [Migration("20210208075542_init")]
     partial class init
     {

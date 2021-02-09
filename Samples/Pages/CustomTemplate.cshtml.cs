@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -8,8 +7,9 @@ using Samples.Models;
 
 namespace Samples.Pages
 {
-    public class EmployeesModel : PageModel
+    public class CustomTemplateModel : PageModel
     {
+
         public int PageSize = 10;
 
         [BindProperty(SupportsGet = true)]
@@ -21,7 +21,7 @@ namespace Samples.Pages
 
         DemoDbContext _db;
 
-        public EmployeesModel(DemoDbContext db)
+        public CustomTemplateModel(DemoDbContext db)
         {
             _db = db;
         }
@@ -29,7 +29,7 @@ namespace Samples.Pages
         public void OnGet()
         {
             var qry = _db.Employees.AsQueryable();
-            PagedEmployees = qry.OrderBy(e => e.Id).Skip((PageIndex-1) * PageSize)
+            PagedEmployees = qry.OrderBy(e => e.Id).Skip((PageIndex - 1) * PageSize)
                 .Take(PageSize).ToList();
             TotalItems = qry.Count();
         }

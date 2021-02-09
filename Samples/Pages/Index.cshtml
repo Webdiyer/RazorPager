@@ -5,8 +5,12 @@
     ViewData["Title"] = "RazorPage samples - Basic";
 }
 
-<div class="text-center">
-    <h1>Basic pager</h1>
+<h1 class="text-center">RazorPager with built-in templates</h1>
+<div class="alert alert-primary">
+    <p>
+        This sample demonstrates the basic usage of RazorPager with built-in templates.
+    </p>
+    <p>本示例演示RazorPager使用内置分页模板的基本用法。</p>
 </div>
 <ul>
     @foreach (var item in Model.PagedData)
@@ -14,6 +18,11 @@
         <li>Item：@item</li>
     }
 </ul>
-<razorpager total-item-count="288" page-size="Model.PageSize"></razorpager>
-<razorpager aria-label="Page navigation" tag-name="nav" total-item-count="288" template-name="bootstrap" page-size="Model.PageSize"></razorpager>
-<div><a href="/?type=news&pagesize=20">参数分页</a></div>
+<p>Default template(basic): <code>&lt;razorpager ...&gt;</code></p>
+<razorpager total-item-count="Model.TotalItems" page-size="Model.PageSize"></razorpager>
+<p>
+    Bootstrap template(built in):
+    <code>&lt;razorpager template-name="bootstrap" ...&gt;</code>
+</p>
+<razorpager aria-label="Page navigation" tag-name="nav" total-item-count="Model.TotalItems"
+            template-name="bootstrap" page-size="Model.PageSize"></razorpager>

@@ -1,12 +1,17 @@
-﻿@page "/employees/{pageindex:int=1}"
+﻿@page "/customtemplate/{pageindex:int=1}"
 @addTagHelper *,RazorPager
-@model Samples.Pages.EmployeesModel
+@model Samples.Pages.CustomTemplateModel
 
-    <h1 class="text-center">Using database</h1>
+    <h1 class="text-center">Using customized pagination template</h1>
     <div class="alert alert-primary">
-        <p>This sample demonstrates how to paginate data that retrieved from Microsoft Sql Server database using Entity Framework core.</p>
-        <p>本示例演示如何通过Entity Framework core访问微软Sql Server数据库并用RazorPager实现分页。</p>
+        <p>
+            This sample demonstrates how to apply customized pagination template for RazorPager,
+            the path to the template file used in this sample is Pages/RazorPager/Bootstrap.cshtml.
+        </p>
+        <p>本示例演示如何为RazorPager应用自定义分页模板，模板文件路径：Pages/RazorPager/Bootstrap.cshtml。</p>
     </div>
+    <razorpager aria-label="Page navigation" tag-name="nav" total-item-count="Model.TotalItems"
+                template-name="RazorPager/bootstrap" page-size="Model.PageSize"></razorpager>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -32,4 +37,4 @@
     </table>
 
     <razorpager aria-label="Page navigation" tag-name="nav" total-item-count="Model.TotalItems"
-                template-name="bootstrap" page-size="Model.PageSize"></razorpager>
+                template-name="RazorPager/bootstrap" page-size="Model.PageSize"></razorpager>
