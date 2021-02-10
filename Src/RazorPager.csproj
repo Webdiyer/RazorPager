@@ -9,7 +9,14 @@
     <Company />
     <Copyright>2021 Webdiyer</Copyright>
     <PackageProjectUrl>http://www.webdiyer.com</PackageProjectUrl>
-    <PackageTags>RazorPager pagination</PackageTags>
+    <PackageTags>RazorPager pagination paging pagination_component</PackageTags>
+    <Description>RazorPager is a simple and flexible pagination component for ASP.NET Core razor pages project.
+
+
+RazorPager是Asp.Net Core razor pages项目中用于实现分页功能的简单灵活的分页组件。</Description>
+    <RepositoryUrl>https://github.com/Webdiyer/RazorPager</RepositoryUrl>
+    <PackageReleaseNotes>First public release</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

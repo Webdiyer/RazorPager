@@ -11,10 +11,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Src\RazorPager.csproj" />
+    <PackageReference Include="RazorPager" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
